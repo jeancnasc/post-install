@@ -22,6 +22,13 @@ If(!(Test-Path -PathType Leaf -Path $settingsPathConfig)){
 }
 New-Item -ItemType SymbolicLink -Path $settingsPathOriginal -Target $settingsPathConfig -Force | Out-Null
 
+# Configurar como terminal padrão
+
+$RegPath = "HKCU:\Console\%%Startup"
+New-Item -Path $RegPath -Force | Out-Null
+New-ItemProperty -Path $RegPath -Name 'DelegationConsole' -Value '{2EACA947-7F5F-4CFA-BA87-8F7FBEEFBE69}' -PropertyType String -Force | Out-Null
+New-ItemProperty -Path $RegPath -Name 'DelegationTerminal' -Value '{E12CFF52-A866-4C77-9A90-F570A7AA2C6B}' -PropertyType String -Force | Out-Null
+
 # --------------------------------------------------------------------------------------------------------------
 
 Write-Output 'Instalando o Clink'

@@ -6,8 +6,10 @@ $configPath = Join-Path -Path $postInstallHome -ChildPath Config
 # --------------------------------------------------------------------------------------------------------------
 # Configurar o WSL
 
-ubuntu run echo
 wsl --set-default Ubuntu
+wsl --user root -- adduser wsluser --gecos `"`"
+wsl --user root -- usermod -aG sudo wsluser
+wsl --manage Ubuntu --set-default-user wsluser
 wsl --user root -- apt update `&`& apt upgrade -y
 
 # --------------------------------------------------------------------------------------------------------------
